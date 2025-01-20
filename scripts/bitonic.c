@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <omp.h>
 
-void bitonicCompare(int *arr, int i, int j, int ascending)
+void bitonicCompare(int *arr, int i, int j, int dir)
 {
-    if ((arr[i] > arr[j]) == ascending)
+    if (dir == (arr[i] > arr[j]))
     {
         int temp = arr[i];
         arr[i] = arr[j];
@@ -12,29 +12,45 @@ void bitonicCompare(int *arr, int i, int j, int ascending)
     }
 }
 
-void bitonicMerge(int *arr, int low, int count, int ascending)
+void bitonicMerge(int *arr, int low, int count, int dir)
 {
     if (count > 1)
     {
-        int mid = count / 2;
-#pragma omp parallel for
-        for (int i = low; i < low + mid; i++)
+        int k = count / 2;
+        
+        #pragma omp parallel for
+        for (int i = low; i < low + k; i++)
         {
-            bitonicCompare(arr, i, i + mid, ascending);
+            bitonicCompare(arr, i, i + k, dir);
         }
-        bitonicMerge(arr, low, mid, ascending);
-        bitonicMerge(arr, low + mid, mid, ascending);
+        
+        #pragma omp parallel sections
+        {
+            #pragma omp section
+            bitonicMerge(arr, low, k, dir);
+            
+            #pragma omp section
+            bitonicMerge(arr, low + k, k, dir);
+        }
     }
 }
 
-void bitonicSort(int *arr, int low, int count, int ascending)
+void bitonicSort(int *arr, int low, int count, int dir)
 {
     if (count > 1)
     {
-        int mid = count / 2;
-        bitonicSort(arr, low, mid, 1);       // Sort in ascending order
-        bitonicSort(arr, low + mid, mid, 0); // Sort in descending order
-        bitonicMerge(arr, low, count, ascending);
+        int k = count / 2;
+        
+        #pragma omp parallel sections
+        {
+            #pragma omp section
+            bitonicSort(arr, low, k, 1);
+            
+            #pragma omp section
+            bitonicSort(arr, low + k, k, 0);
+        }
+        
+        bitonicMerge(arr, low, count, dir);
     }
 }
 
@@ -42,17 +58,20 @@ int main()
 {
     int arr[] = {12, 4, 7, 3, 9, 6, 2, 8};
     int n = sizeof(arr) / sizeof(arr[0]);
-    omp_set_num_threads(4); // Define o número de threads para 4
-
-#pragma omp parallel
-#pragma omp single
-    bitonicSort(arr, 0, n, 1); // Sort entire array in ascending order
-
+    
+    printf("Array original: ");
     for (int i = 0; i < n; i++)
-    {
         printf("%d ", arr[i]);
-    }
     printf("\n");
-
+    
+    omp_set_num_threads(4);
+    
+    bitonicSort(arr, 0, n, 1);
+    
+    printf("\nArray ordenado: ");
+    for (int i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+    
     return 0;
 }
