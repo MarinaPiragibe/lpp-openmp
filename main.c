@@ -5,23 +5,19 @@
 #include "./scripts/suporte.h"
 
 int main() {
-    int tamanho = 524288;
+    int tamanho = 8;
     int* arr = gerarArrayAleatorio(tamanho);
     
     printf("Array original: ");
-    for (int i = 0; i < tamanho; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
+    printArray(arr, tamanho);
     
     omp_set_num_threads(4);
     
     bitonicSort(arr, 0, tamanho, 1);
     
     printf("\nArray ordenado: ");
-    for (int i = 0; i < tamanho; i++)
-        printf("%d ", arr[i]);
-    printf("\n");
+    printArray(arr, tamanho);
     
-    free(arr);  // lembrar de liberar a memoria alocada
+    free(arr);
     return 0;
 }

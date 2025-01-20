@@ -1,5 +1,6 @@
 #include "suporte.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 int* gerarArrayAleatorio(int tamanho) {
     int* arr = (int*)malloc(tamanho * sizeof(int));
@@ -9,4 +10,11 @@ int* gerarArrayAleatorio(int tamanho) {
     }
     
     return arr;
+}
+
+void printArray(int arr[], int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
 }

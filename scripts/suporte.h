@@ -3,4 +3,6 @@
 
 int* gerarArrayAleatorio(int tamanho);
 
+void printArray(int arr[], int tamanho);
+
 #endif
