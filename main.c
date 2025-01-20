@@ -13,6 +13,7 @@ int main()
 
     // geração dos arrays
 
+    //int tam_p = 16, tam_m = 64, tam_g = 256;
     int tam_p = 65536, tam_m = 131072, tam_g = 524288;
 
     int* arr_p = gerarArrayAleatorio(tam_p);
@@ -24,10 +25,13 @@ int main()
     // -- 1 thread
 
     omp_set_num_threads(1);
-    
+    printf("\n\nUtilizando 1 thread\n\n");
+
     // array pequeno
     int* arr_p_1 = (int *)malloc(tam_p * sizeof(int));
     memcpy(arr_p_1, arr_p, tam_p * sizeof(int));
+
+    printf("\nOrdenando array pequeno...\n");
 
     double tempo_bit_p_1 = medeTempoBitonic(arr_p_1, tam_p);
     printf("Tempo bitonic pequeno 1 thread: %f\n", tempo_bit_p_1);
@@ -40,6 +44,8 @@ int main()
     int* arr_m_1 = (int *)malloc(tam_m * sizeof(int));
     memcpy(arr_m_1, arr_m, tam_m * sizeof(int));
 
+    printf("\nOrdenando array médio...\n");
+
     double tempo_bit_m_1 = medeTempoBitonic(arr_m_1, tam_m);
     printf("Tempo bitonic médio 1 thread: %f\n", tempo_bit_m_1);
 
@@ -50,6 +56,8 @@ int main()
     // array grande
     int* arr_g_1 = (int *)malloc(tam_g * sizeof(int));
     memcpy(arr_g_1, arr_g, tam_g * sizeof(int));
+
+    printf("\nOrdenando array grande...\n");
 
     double tempo_bit_g_1 = medeTempoBitonic(arr_g_1, tam_g);
     printf("Tempo bitonic grande 1 thread: %f\n", tempo_bit_g_1);
@@ -62,10 +70,13 @@ int main()
     // -- 2 threads
 
     omp_set_num_threads(2);
+    printf("\n\nUtilizando 2 threads\n\n");
 
     // array pequeno
     int* arr_p_2 = (int *)malloc(tam_p * sizeof(int));
     memcpy(arr_p_2, arr_p, tam_p * sizeof(int));
+
+    printf("\nOrdenando array pequeno...\n");
 
     double tempo_bit_p_2 = medeTempoBitonic(arr_p_2, tam_p);
     printf("Tempo bitonic pequeno 2 threads: %f\n", tempo_bit_p_2);
@@ -77,6 +88,8 @@ int main()
     // array médio
     int* arr_m_2 = (int *)malloc(tam_m * sizeof(int));
     memcpy(arr_m_2, arr_m, tam_m * sizeof(int));
+
+    printf("\nOrdenando array médio...\n");
 
     double tempo_bit_m_2 = medeTempoBitonic(arr_m_2, tam_m);
     printf("Tempo bitonic médio 2 threads: %f\n", tempo_bit_m_2);
@@ -90,6 +103,8 @@ int main()
     int* arr_g_2 = (int *)malloc(tam_g * sizeof(int));
     memcpy(arr_g_2, arr_g, tam_g * sizeof(int));
 
+    printf("\nOrdenando array grande...\n");
+
     double tempo_bit_g_2 = medeTempoBitonic(arr_g_2, tam_g);
     printf("Tempo bitonic grande 2 threads: %f\n", tempo_bit_g_2);
 
@@ -101,10 +116,13 @@ int main()
     // -- 4 threads
 
     omp_set_num_threads(4);
+    printf("\n\nUtilizando 4 threads\n\n");
 
     // array pequeno
     int* arr_p_4 = (int *)malloc(tam_p * sizeof(int));
     memcpy(arr_p_4, arr_p, tam_p * sizeof(int));
+
+    printf("\nOrdenando array pequeno...\n");
 
     double tempo_bit_p_4 = medeTempoBitonic(arr_p_4, tam_p);
     printf("Tempo bitonic pequeno 4 threads: %f\n", tempo_bit_p_4);
@@ -117,6 +135,8 @@ int main()
     int* arr_m_4 = (int *)malloc(tam_m * sizeof(int));
     memcpy(arr_m_4, arr_m, tam_m * sizeof(int));
 
+    printf("\nOrdenando array médio...\n");
+
     double tempo_bit_m_4 = medeTempoBitonic(arr_m_4, tam_m);
     printf("Tempo bitonic médio 4 threads: %f\n", tempo_bit_m_4);
 
@@ -127,6 +147,8 @@ int main()
     // array grande
     int* arr_g_4 = (int *)malloc(tam_g * sizeof(int));
     memcpy(arr_g_4, arr_g, tam_g * sizeof(int));
+
+    printf("\nOrdenando array grande...\n");
 
     double tempo_bit_g_4 = medeTempoBitonic(arr_g_4, tam_g);
     printf("Tempo bitonic grande 4 threads: %f\n", tempo_bit_g_4);
