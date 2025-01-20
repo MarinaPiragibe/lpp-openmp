@@ -52,3 +52,11 @@ void bitonicSort(int *arr, int low, int count, int dir)
         bitonicMerge(arr, low, count, dir);
     }
 }
+
+double medeTempoBitonic(int *arr, int tamanho) {
+    double inicio = omp_get_wtime();
+    bitonicSort(arr, 0, tamanho, 1);
+    double fim = omp_get_wtime();
+
+    return fim - inicio;
+}

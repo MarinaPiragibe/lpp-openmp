@@ -29,8 +29,9 @@ void sort_verify(int *list, int size)
     {
         if (list[i] > list[i + 1])
         {
-            printf("\n----------- Array DESordenado :( -----------\n");
+            printf("\n----------- Array DESordenado :( -----------\n\n");
+            return;
         }
     }
-    printf("\n----------- Array Ordenado! :) -----------\n");
+    printf("\n----------- Array Ordenado! :) -----------\n\n");
 }
