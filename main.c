@@ -4,7 +4,6 @@
 #include <string.h>
 #include "./scripts/bitonic.h"
 #include "./scripts/bubble.h"
-#include "./scripts/bubblev2.h"
 #include "./scripts/suporte.h"
 
 int main()
@@ -299,57 +298,6 @@ int main()
     sort_verify(arrb_g_4, tam_g);
 
     free(arrb_g_4);
-
-    // execuções bubble v2
-    printf("\n------------------------------------------\n");
-    printf("\n-------===  Execuções Bubblev2 ===-------\n");
-    printf("\n------------------------------------------\n");
-
-    // -- 4 threads
-
-    omp_set_num_threads(4);
-    printf("\n\nUtilizando 4 threads\n\n");
-
-    // array pequeno
-    int* arrc_p_4 = (int *)malloc(tam_p * sizeof(int));
-    memcpy(arrc_p_4, arr_p, tam_p * sizeof(int));
-
-    printf("\nOrdenando array pequeno...\n");
-
-    double tempo_bubtwo_p_4 = medeTempoBubblev2(arrc_p_4, tam_p);
-    printf("Tempo bitonic pequeno 4 threads: %f\n", tempo_bubtwo_p_4);
-
-    sort_verify(arrc_p_4, tam_p);
-
-    free(arrc_p_4);
-
-    // array médio
-    int* arrc_m_4 = (int *)malloc(tam_m * sizeof(int));
-    memcpy(arrc_m_4, arr_m, tam_m * sizeof(int));
-
-    printf("\nOrdenando array médio...\n");
-
-    double tempo_bubtwo_m_4 = medeTempoBubblev2(arrc_m_4, tam_m);
-    printf("Tempo bitonic médio 4 threads: %f\n", tempo_bubtwo_m_4);
-
-    sort_verify(arrc_m_4, tam_m);
-
-    free(arrc_m_4);
-
-    // array grande
-    int* arrc_g_4 = (int *)malloc(tam_g * sizeof(int));
-    memcpy(arrc_g_4, arr_g, tam_g * sizeof(int));
-
-    printf("\nOrdenando array grande...\n");
-
-    double tempo_bubtwo_g_4 = medeTempoBubblev2(arrc_g_4, tam_g);
-    printf("Tempo bitonic grande 4 threads: %f\n", tempo_bubtwo_g_4);
-    
-    sort_verify(arrc_g_4, tam_g);
-
-    free(arrc_g_4);
-
-    // ------------------------------------------- fim execs bubble v2
 
     // liberação de memória
     free(arr_p);

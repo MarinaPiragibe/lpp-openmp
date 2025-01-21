@@ -1,63 +1,53 @@
 #include <stdio.h>
 #include <omp.h>
+#include <stdlib.h>
 #include "bubble.h"
 
-void bubble_sort_parallel(int *arr, int n)
-{
-    // Laço externo para o número de passos do Bubble Sort
-    for (int step = 0; step < n - 1; step++)
-    {
-        int swap_flag = 0; // Flag para verificar se houve troca
-
-        // Comparações em índices pares
-        if (step % 2 == 0)
-        {
-            #pragma omp parallel for reduction(| : swap_flag)
-            for (int i = 0; i < n - 1; i += 2)
-            {
-                if (arr[i] > arr[i + 1])
-                {
-                    int temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
-                    swap_flag = 1; // Marca que houve troca
-                }
+void bubbleSortParallel(int *arr, int n) {
+    int i, j;
+    int first;
+    
+    // Flag para verificar se houve trocas
+    int trocou;
+    
+    // Loop principal do bubble sort
+    for (i = 0; i < n-1; i++) {
+        trocou = 0;
+        
+        // Fase par
+        #pragma omp parallel for shared(arr, n) private(j) reduction(|:trocou)
+        for (j = 0; j < n-1; j += 2) {
+            if (arr[j] > arr[j+1]) {
+                // Troca os elementos
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+                trocou = 1;
             }
         }
-
-        // Sincronização das threads após a fase de comparações pares
-        #pragma omp barrier
-
-        // Comparações em índices ímpares
-        if (step % 2 == 1)
-        {
-            #pragma omp parallel for reduction(| : swap_flag)
-            for (int i = 1; i < n - 1; i += 2)
-            {
-                if (arr[i] > arr[i + 1])
-                {
-                    int temp = arr[i];
-                    arr[i] = arr[i + 1];
-                    arr[i + 1] = temp;
-                    swap_flag = 1; // Marca que houve troca
-                }
+        
+        // Fase ímpar
+        #pragma omp parallel for shared(arr, n) private(j) reduction(|:trocou)
+        for (j = 1; j < n-1; j += 2) {
+            if (arr[j] > arr[j+1]) {
+                // Troca os elementos
+                int temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+                trocou = 1;
             }
         }
-
-        // Sincronização das threads após a fase de comparações ímpares
-        #pragma omp barrier
-
-        // Se não houve troca em nenhuma fase, o array já está ordenado
-        if (!swap_flag)
-        {
-            break; // Finaliza o algoritmo, pois o array está ordenado
+        
+        // Se não houve trocas, o array está ordenado
+        if (!trocou) {
+            break;
         }
     }
 }
 
 double medeTempoBubble(int *arr, int tamanho) {
     double inicio = omp_get_wtime();
-    bubble_sort_parallel(arr, tamanho);
+    bubbleSortParallel(arr, tamanho);
     double fim = omp_get_wtime();
 
     return fim - inicio;
