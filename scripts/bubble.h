@@ -3,4 +3,6 @@
 
 void bubble_sort_parallel(int *arr, int n);
 
+double medeTempoBubble(int *arr, int tamanho);
+
 #endif

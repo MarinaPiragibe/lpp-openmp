@@ -12,7 +12,7 @@ void bubble_sort_parallel(int *arr, int n)
         // Comparações em índices pares
         if (step % 2 == 0)
         {
-#pragma omp parallel for reduction(| : swap_flag)
+            #pragma omp parallel for reduction(| : swap_flag)
             for (int i = 0; i < n - 1; i += 2)
             {
                 if (arr[i] > arr[i + 1])
@@ -26,12 +26,12 @@ void bubble_sort_parallel(int *arr, int n)
         }
 
         // Sincronização das threads após a fase de comparações pares
-#pragma omp barrier
+        #pragma omp barrier
 
         // Comparações em índices ímpares
         if (step % 2 == 1)
         {
-#pragma omp parallel for reduction(| : swap_flag)
+            #pragma omp parallel for reduction(| : swap_flag)
             for (int i = 1; i < n - 1; i += 2)
             {
                 if (arr[i] > arr[i + 1])
@@ -45,7 +45,7 @@ void bubble_sort_parallel(int *arr, int n)
         }
 
         // Sincronização das threads após a fase de comparações ímpares
-#pragma omp barrier
+        #pragma omp barrier
 
         // Se não houve troca em nenhuma fase, o array já está ordenado
         if (!swap_flag)
@@ -53,4 +53,12 @@ void bubble_sort_parallel(int *arr, int n)
             break; // Finaliza o algoritmo, pois o array está ordenado
         }
     }
+}
+
+double medeTempoBubble(int *arr, int tamanho) {
+    double inicio = omp_get_wtime();
+    bubble_sort_parallel(arr, tamanho);
+    double fim = omp_get_wtime();
+
+    return fim - inicio;
 }

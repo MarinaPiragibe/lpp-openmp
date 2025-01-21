@@ -4,6 +4,7 @@
 #include <string.h>
 #include "./scripts/bitonic.h"
 #include "./scripts/bubble.h"
+#include "./scripts/bubblev2.h"
 #include "./scripts/suporte.h"
 
 int main()
@@ -21,7 +22,10 @@ int main()
     int* arr_g = gerarArrayAleatorio(tam_g);
 
     // execuções bitonic
-    
+    printf("\n------------------------------------------\n");
+    printf("\n-------===  Execuções Bitonic  ===-------\n");
+    printf("\n------------------------------------------\n");
+
     // -- 1 thread
 
     omp_set_num_threads(1);
@@ -158,17 +162,194 @@ int main()
     free(arr_g_4);
 
     // execuções bubble
+    printf("\n------------------------------------------\n");
+    printf("\n -------===  Execuções Bubble  ===-------\n");
+    printf("\n------------------------------------------\n");
 
-    // printf("Array original: ");
-    // printArray(arr_p, tam_p);
+    // -- 1 thread
 
-    // omp_set_num_threads(4);
+    omp_set_num_threads(1);
+    printf("\n\nUtilizando 1 thread\n\n");
 
-    bubble_sort_parallel(arr_g, tam_g);
-    sort_verify(arr_g, tam_g);
+    // array pequeno
+    int* arrb_p_1 = (int *)malloc(tam_p * sizeof(int));
+    memcpy(arrb_p_1, arr_p, tam_p * sizeof(int));
 
-    // printf("\nArray ordenado: ");
-    // printArray(arr_p, tam_p);
+    printf("\nOrdenando array pequeno...\n");
+
+    double tempo_bub_p_1 = medeTempoBubble(arrb_p_1, tam_p);
+    printf("Tempo bubble pequeno 1 thread: %f\n", tempo_bub_p_1);
+
+    sort_verify(arrb_p_1, tam_p);
+
+    free(arrb_p_1);
+
+    // array médio
+    int* arrb_m_1 = (int *)malloc(tam_m * sizeof(int));
+    memcpy(arrb_m_1, arr_m, tam_m * sizeof(int));
+
+    printf("\nOrdenando array médio...\n");
+
+    double tempo_bub_m_1 = medeTempoBubble(arrb_m_1, tam_m);
+    printf("Tempo bubble médio 1 thread: %f\n", tempo_bub_m_1);
+
+    sort_verify(arrb_m_1, tam_m);
+
+    free(arrb_m_1);
+
+    // array grande
+    int* arrb_g_1 = (int *)malloc(tam_g * sizeof(int));
+    memcpy(arrb_g_1, arr_g, tam_g * sizeof(int));
+
+    printf("\nOrdenando array grande...\n");
+
+    double tempo_bub_g_1 = medeTempoBubble(arrb_g_1, tam_g);
+    printf("Tempo bubble grande 1 thread: %f\n", tempo_bub_g_1);
+
+    sort_verify(arrb_g_1, tam_g);
+
+    free(arrb_g_1);
+
+
+    // -- 2 threads
+
+    omp_set_num_threads(2);
+    printf("\n\nUtilizando 2 threads\n\n");
+
+    // array pequeno
+    int* arrb_p_2 = (int *)malloc(tam_p * sizeof(int));
+    memcpy(arrb_p_2, arr_p, tam_p * sizeof(int));
+
+    printf("\nOrdenando array pequeno...\n");
+
+    double tempo_bub_p_2 = medeTempoBubble(arrb_p_2, tam_p);
+    printf("Tempo bubble pequeno 2 threads: %f\n", tempo_bub_p_2);
+
+    sort_verify(arrb_p_2, tam_p);
+
+    free(arrb_p_2);
+
+    // array médio
+    int* arrb_m_2 = (int *)malloc(tam_m * sizeof(int));
+    memcpy(arrb_m_2, arr_m, tam_m * sizeof(int));
+
+    printf("\nOrdenando array médio...\n");
+
+    double tempo_bub_m_2 = medeTempoBubble(arrb_m_2, tam_m);
+    printf("Tempo bubble médio 2 threads: %f\n", tempo_bub_m_2);
+
+    sort_verify(arrb_m_2, tam_m);
+
+    free(arrb_m_2);
+
+    // array grande
+
+    int* arrb_g_2 = (int *)malloc(tam_g * sizeof(int));
+    memcpy(arrb_g_2, arr_g, tam_g * sizeof(int));
+
+    printf("\nOrdenando array grande...\n");
+
+    double tempo_bub_g_2 = medeTempoBubble(arrb_g_2, tam_g);
+    printf("Tempo bubble grande 2 threads: %f\n", tempo_bub_g_2);
+
+    sort_verify(arrb_g_2, tam_g);
+
+    free(arrb_g_2);
+
+    // -- 4 threads
+
+    omp_set_num_threads(4);
+    printf("\n\nUtilizando 4 threads\n\n");
+
+    // array pequeno
+    int* arrb_p_4 = (int *)malloc(tam_p * sizeof(int));
+    memcpy(arrb_p_4, arr_p, tam_p * sizeof(int));
+
+    printf("\nOrdenando array pequeno...\n");
+
+    double tempo_bub_p_4 = medeTempoBubble(arrb_p_4, tam_p);
+    printf("Tempo bubble pequeno 4 threads: %f\n", tempo_bub_p_4);
+
+    sort_verify(arrb_p_4, tam_p);
+
+    free(arrb_p_4);
+
+    // array médio
+    int* arrb_m_4 = (int *)malloc(tam_m * sizeof(int));
+    memcpy(arrb_m_4, arr_m, tam_m * sizeof(int));
+
+    printf("\nOrdenando array médio...\n");
+
+    double tempo_bub_m_4 = medeTempoBubble(arrb_m_4, tam_m);
+    printf("Tempo bubble médio 4 threads: %f\n", tempo_bub_m_4);
+
+    sort_verify(arrb_m_4, tam_m);
+
+    free(arrb_m_4);
+
+    // array grande
+    int* arrb_g_4 = (int *)malloc(tam_g * sizeof(int));
+    memcpy(arrb_g_4, arr_g, tam_g * sizeof(int));
+
+    printf("\nOrdenando array grande...\n");
+
+    double tempo_bub_g_4 = medeTempoBubble(arrb_g_4, tam_g);
+    printf("Tempo bubble grande 4 threads: %f\n", tempo_bub_g_4);
+    
+    sort_verify(arrb_g_4, tam_g);
+
+    free(arrb_g_4);
+
+    // execuções bubble v2
+    printf("\n------------------------------------------\n");
+    printf("\n-------===  Execuções Bubblev2 ===-------\n");
+    printf("\n------------------------------------------\n");
+
+    // -- 4 threads
+
+    omp_set_num_threads(4);
+    printf("\n\nUtilizando 4 threads\n\n");
+
+    // array pequeno
+    int* arrc_p_4 = (int *)malloc(tam_p * sizeof(int));
+    memcpy(arrc_p_4, arr_p, tam_p * sizeof(int));
+
+    printf("\nOrdenando array pequeno...\n");
+
+    double tempo_bubtwo_p_4 = medeTempoBubblev2(arrc_p_4, tam_p);
+    printf("Tempo bitonic pequeno 4 threads: %f\n", tempo_bubtwo_p_4);
+
+    sort_verify(arrc_p_4, tam_p);
+
+    free(arrc_p_4);
+
+    // array médio
+    int* arrc_m_4 = (int *)malloc(tam_m * sizeof(int));
+    memcpy(arrc_m_4, arr_m, tam_m * sizeof(int));
+
+    printf("\nOrdenando array médio...\n");
+
+    double tempo_bubtwo_m_4 = medeTempoBubblev2(arrc_m_4, tam_m);
+    printf("Tempo bitonic médio 4 threads: %f\n", tempo_bubtwo_m_4);
+
+    sort_verify(arrc_m_4, tam_m);
+
+    free(arrc_m_4);
+
+    // array grande
+    int* arrc_g_4 = (int *)malloc(tam_g * sizeof(int));
+    memcpy(arrc_g_4, arr_g, tam_g * sizeof(int));
+
+    printf("\nOrdenando array grande...\n");
+
+    double tempo_bubtwo_g_4 = medeTempoBubblev2(arrc_g_4, tam_g);
+    printf("Tempo bitonic grande 4 threads: %f\n", tempo_bubtwo_g_4);
+    
+    sort_verify(arrc_g_4, tam_g);
+
+    free(arrc_g_4);
+
+    // ------------------------------------------- fim execs bubble v2
 
     // liberação de memória
     free(arr_p);
